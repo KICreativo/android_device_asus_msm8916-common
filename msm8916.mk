@@ -315,7 +315,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libwcnss_qmi \
     libwpa_client \
-    wificond
+    wificond \
+    wifilogd
 
 PRODUCT_PACKAGES += \
     libwifi-hal-qcom \
