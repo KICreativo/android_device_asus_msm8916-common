@@ -18,6 +18,8 @@
 
 set -e
 
+export INITIAL_COPYRIGHT_YEAR=2018
+
 # Load extractutils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
@@ -42,6 +44,8 @@ write_makefiles "$MY_DIR"/proprietary-files.txt
 
 # We are done!
 write_footers
+
+INITIAL_COPYRIGHT_YEAR="$DEVICE_BRINGUP_YEAR"
 
 if [ -s "$MY_DIR"/../$DEVICE/proprietary-files.txt ]; then
     # Reinitialize the helper for device
