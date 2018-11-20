@@ -74,8 +74,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/aanc_tuning_mixer.txt:system/etc/aanc_tuning_mixer.txt \
     $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
     $(LOCAL_PATH)/audio/mixer_paths_mtp.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_mtp.xml \
-    $(LOCAL_PATH)/audio/mixer_paths_mtp_ZD551KL.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_mtp_ZD551KL.xml \
-    $(LOCAL_PATH)/audio/mixer_paths_mtp_ZE600KL.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_mtp_ZE600KL.xml \
     $(LOCAL_PATH)/audio/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml
 
 # XML Audio configuration files

@@ -16,20 +16,6 @@ if [ -f "$cpu_id_file" ]; then
     esac
 fi
 
-# We support 3 different devices with this repository
-# Let's replace /system/etc/mixer_paths_mtp.xml with correct config
-APID=`cat /proc/apid`
-if [ $APID -eq "1" ]; then
-    mv /system/vendor/etc/mixer_paths_mtp_ZE600KL.xml /system/vendor/etc/mixer_paths_mtp.xml
-    rm -f /system/vendor/etc/mixer_paths_mtp_ZD551KL.xml
-elif [ $APID -eq "3" ]; then
-    mv /system/vendor/etc/mixer_paths_mtp_ZD551KL.xml /system/vendor/etc/mixer_paths_mtp.xml
-    rm -f /system/vendor/etc/mixer_paths_mtp_ZE600KL.xml
-else
-    rm -f /system/vendor/etc/mixer_paths_mtp_ZD551KL.xml
-    rm -f /system/vendor/etc/mixer_paths_mtp_ZE600KL.xml
-fi
-
 # Use proper media_codecs by SOC
 if [ -f "$cpu_id_file" ]; then
     case "$cpu_id" in
