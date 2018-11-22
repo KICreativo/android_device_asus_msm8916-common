@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (C) 2016 The CyanogenMod Project
+# Copyright (C) 2016 The CyanogenMod Project / 2018 KI.Lab for Z00xD
 # Copyright (C) 2017 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +17,6 @@
 #
 
 set -e
-
-export INITIAL_COPYRIGHT_YEAR=2018
 
 # Load extractutils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
@@ -37,15 +35,13 @@ fi
 setup_vendor "$DEVICE_COMMON" "$VENDOR" "$AOSP_ROOT" "true" "$1"
 
 # Copyright headers and guards
-write_headers "Z00ED Z00RD"
+write_headers "Z00RD Z00ED Z00E"
 
 # The standard common blobs
 write_makefiles "$MY_DIR"/proprietary-files.txt
 
 # We are done!
 write_footers
-
-INITIAL_COPYRIGHT_YEAR="$DEVICE_BRINGUP_YEAR"
 
 if [ -s "$MY_DIR"/../$DEVICE/proprietary-files.txt ]; then
     # Reinitialize the helper for device

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- ZE550KL 20160303 WW -->
+<!-- ZE500KL_V7.1 20160728 WW -->
 <mixer>
     <!-- These are the initial mixer settings -->
     <ctl name="Voice Rx Device Mute" id="0" value="0" />
@@ -24,15 +24,15 @@
     <ctl name="HPHL Volume" value="9" />
     <ctl name="HPHR Volume" value="9" />
     <ctl name="RX1 Digital Volume" value="84" />
-    <ctl name="RX2 Digital Volume" value="84" />
-    <ctl name="RX3 Digital Volume" value="84" />
+    <ctl name="RX2 Digital Volume" value="85" />
+    <ctl name="RX3 Digital Volume" value="93" />
     <ctl name="IIR1 INP1 Volume" value="84" />
     <ctl name="IIR1 INP2 Volume" value="84" />
     <ctl name="IIR1 INP3 Volume" value="84" />
     <ctl name="IIR1 INP4 Volume" value="84" />
-    <ctl name="ADC1 Volume" value="4" />
-    <ctl name="ADC2 Volume" value="4" />
-    <ctl name="ADC3 Volume" value="4" />
+    <ctl name="ADC1 Volume" value="8" />
+    <ctl name="ADC2 Volume" value="8" />
+    <ctl name="ADC3 Volume" value="8" />
     <ctl name="DEC1 Volume" value="84" />
     <ctl name="DEC2 Volume" value="84" />
     <ctl name="DEC2 MUX" value="ZERO" />
@@ -54,6 +54,7 @@
     <ctl name="HPHR" value="ZERO" />
     <ctl name="SPK DAC Switch" value="0" />
     <ctl name="Speaker Boost" value="ENABLE" />
+    <ctl name="Speaker Gain" value="POS_18_DB" />
     <ctl name="MICBIAS CAPLESS Switch" value="0" />
     <ctl name="EAR PA Gain" value="POS_6_DB" />
     <ctl name="EAR PA Boost" value="ENABLE" />
@@ -299,6 +300,15 @@
         <ctl name="MultiMedia5 Mixer TERT_MI2S_TX" value="1" />
     </path>
 
+    <path name="low-latency-record bt-sco">
+        <ctl name="MultiMedia5 Mixer INTERNAL_BT_SCO_TX" value="1" />
+    </path>
+
+    <path name="low-latency-record bt-sco-wb">
+        <path name="bt-sco-wb-samplerate" />
+        <path name="low-latency-record bt-sco" />
+    </path>
+
     <path name="voice-call">
         <ctl name="PRI_MI2S_RX_Voice Mixer CSVoice" value="1" />
         <ctl name="Voice_Tx Mixer TERT_MI2S_TX_Voice" value="1" />
@@ -495,27 +505,24 @@
     <path name="adc3">
         <ctl name="DEC1 MUX" value="ADC2" />
         <ctl name="ADC2 MUX" value="INP3" />
+        <ctl name="MICBIAS CAPLESS Switch" value="1" />
     </path>
 
     <path name="speaker">
         <ctl name="RX3 MIX1 INP1" value="RX1" />
         <ctl name="SPK DAC Switch" value="1" />
-    </path>
-
-    <path name="speaker-for-ringtone">
-        <path name="speaker" />
+        <ctl name="Speaker Gain" value="POS_18_DB" />
     </path>
 
     <path name="speaker-mic">
-        <path name="adc1" />
+        <path name="adc3" />
         <ctl name="IIR1 INP1 MUX" value="DEC1" />
-        <ctl name="ADC1 Volume" value="8" />
     </path>
 
     <path name="handset">
         <ctl name="RX1 MIX1 INP1" value="RX1" />
         <ctl name="RDAC2 MUX" value="RX1" />
-        <ctl name="RX1 Digital Volume" value="84" />
+        <ctl name="RX1 Digital Volume" value="93" />
         <ctl name="EAR PA Gain" value="POS_6_DB" />
         <ctl name="EAR_S" value="Switch" />
    </path>
@@ -523,7 +530,7 @@
     <path name="handset-mic">
         <path name="adc3" />
         <ctl name="IIR1 INP1 MUX" value="DEC1" />
-        <ctl name="ADC3 Volume" value="6" />
+	<ctl name="ADC3 Volume" value="8" /> <!-- Ryan 160727 -->
     </path>
 
     <path name="headphones">
@@ -531,25 +538,17 @@
         <ctl name="RX1 MIX1 INP1" value="RX1" />
         <ctl name="RX2 MIX1 INP1" value="RX2" />
         <ctl name="RDAC2 MUX" value="RX2" />
+        <ctl name="RX1 Digital Volume" value="90" />
+        <ctl name="RX2 Digital Volume" value="90" />
+        <ctl name="EAR PA Gain" value="POS_6_DB" />
         <ctl name="HPHL" value="Switch" />
         <ctl name="HPHR" value="Switch" />
-    </path>
-
-    <path name="headphones-three-poles">
-        <path name="headphones" />
-    </path>
-
-    <path name="headphones-for-ringtone">
-        <path name="headphones" />
-        <ctl name="RX1 Digital Volume" value="64" />
-        <ctl name="RX2 Digital Volume" value="64" />
     </path>
 
     <path name="headset-mic">
         <path name="adc2" />
         <ctl name="ADC2 MUX" value="INP2" />
         <ctl name="IIR1 INP1 MUX" value="DEC1" />
-        <ctl name="ADC2 Volume" value="6" />
     </path>
 
     <path name="sidetone-iir">
@@ -573,96 +572,112 @@
         <ctl name="IIR1 INP1 Volume" value="53" />
     </path>
 
+    <path name="headphones-three-poles">
+        <path name="headphones" />
+    </path>
+
+<!-- Voice -->
+
     <path name="voice-handset">
         <path name="sidetone-handset" />
         <path name="handset" />
     </path>
 
-    <path name="handset-for-voip">
-        <path name="voice-handset" />
+    <path name="voice-speaker-mic">
+        <path name="speaker-mic" />
     </path>
 
     <path name="voice-speaker">
         <path name="speaker" />
     </path>
 
-    <path name="speaker-for-voip">
-        <path name="voice-speaker" />
-    </path>
-
-    <path name="voice-speaker-mic">
-        <path name="speaker-mic" />
-        <ctl name="ADC1 Volume" value="6" />
-    </path>
-
-    <!-- Hands-free settings for 2nd Mic -->
-    <path name="voice-speaker-bmic">
-        <path name="adc1" />
-        <ctl name="ADC1 Volume" value="8" />
-        <ctl name="IIR1 INP1 MUX" value="DEC1" />
-    </path>
-
-    <path name="speaker-bmic-for-voip">
-        <path name="voice-speaker-bmic" />
-        <ctl name="ADC1 Volume" value="6" />
+    <path name="voice-handset-mic">
+        <path name="handset-mic" />
     </path>
 
     <path name="voice-headphones">
         <path name="headphones" />
+        <ctl name="RX1 Digital Volume" value="90" />
+        <ctl name="RX2 Digital Volume" value="90" />
+        <ctl name="EAR PA Gain" value="POS_6_DB" />
         <path name="sidetone-headphone" />
     </path>
 
-    <path name="headphones-for-voip">
-        <path name="voice-headphones" />
+    <path name="voice-headphones-three-poles">
+        <path name="headphones" />
+        <ctl name="RX1 Digital Volume" value="90" />
+        <ctl name="RX2 Digital Volume" value="90" />
+        <ctl name="EAR PA Gain" value="POS_6_DB" />
+        <path name="sidetone-headphone" />
     </path>
 
     <path name="voice-headset-mic">
         <path name="headset-mic" />
     </path>
 
-    <path name="headphones-mic-for-voip">
-        <path name="voice-headset-mic" />
-        <ctl name="ADC2 Volume" value="6" />
+<!-- VOIP -->
+
+    <path name="handset-for-voip">
+        <path name="voice-handset" />
     </path>
 
+    <path name="headphones-mic-for-voip">
+        <path name="voice-headset-mic" />
+    </path>
+
+    <path name="speaker-for-voip">
+        <path name="voice-speaker" />
+    </path>
+
+    <path name="voice-speaker-bmic">
+        <path name="adc3" />
+        <ctl name="IIR1 INP1 MUX" value="DEC1" />
+        <ctl name="ADC3 Volume" value="8" /> <!-- Ryan 160727 -->
+    </path>
+
+    <path name="speaker-bmic-for-voip">
+        <path name="voice-speaker-bmic" />
+    </path>
+
+<!-- Ringtone -->
     <path name="speaker-and-headphones">
         <path name="speaker" />
         <path name="headphones" />
-        <ctl name="RX1 Digital Volume" value="64" />
-        <ctl name="RX2 Digital Volume" value="64" />
+        <ctl name="RX1 Digital Volume" value="80" />
+        <ctl name="RX2 Digital Volume" value="80" />
         <ctl name="EAR PA Gain" value="POS_6_DB" />
         <ctl name="RX3 MIX1 INP2" value="RX2" />
-        <ctl name="RX3 Digital Volume" value="78" />
-	</path>
+        <ctl name="RX3 Digital Volume" value="93" />
+    </path>
 
     <path name="speaker-and-headphones-three-poles">
         <path name="speaker" />
         <path name="headphones" />
-        <ctl name="RX1 Digital Volume" value="64" />
-        <ctl name="RX2 Digital Volume" value="64" />
+        <ctl name="RX1 Digital Volume" value="80" />
+        <ctl name="RX2 Digital Volume" value="80" />
         <ctl name="EAR PA Gain" value="POS_6_DB" />
         <ctl name="RX3 MIX1 INP2" value="RX2" />
-        <ctl name="RX3 Digital Volume" value="78" />
+        <ctl name="RX3 Digital Volume" value="93" />
     </path>
 
-    <path name="speaker-and-headphones-for-ringtone">
+    <path name="ringtone-speaker-and-headphones">
         <path name="speaker" />
         <path name="headphones" />
-        <ctl name="RX1 Digital Volume" value="64" />
-        <ctl name="RX2 Digital Volume" value="64" />
+        <ctl name="RX1 Digital Volume" value="78" />
+        <ctl name="RX2 Digital Volume" value="78" />
         <ctl name="EAR PA Gain" value="POS_6_DB" />
         <ctl name="RX3 MIX1 INP2" value="RX2" />
-        <ctl name="RX3 Digital Volume" value="78" />
+        <ctl name="RX3 Digital Volume" value="93" />
     </path>
 
-    <path name="speaker-and-headphones-three-poles-for-ringtone">
+    <path name="ringtone-speaker-and-headphones-three-poles">
         <path name="speaker" />
         <path name="headphones" />
-        <ctl name="RX1 Digital Volume" value="64" />
-        <ctl name="RX2 Digital Volume" value="64" />
+        <ctl name="RX1 Digital Volume" value="78" />
+        <ctl name="RX2 Digital Volume" value="78" />
         <ctl name="EAR PA Gain" value="POS_6_DB" />
         <ctl name="RX3 MIX1 INP2" value="RX2" />
-        <ctl name="RX3 Digital Volume" value="78" />
+        <ctl name="RX3 Digital Volume" value="93" />
     </path>
 
     <path name="usb-headphones">
@@ -684,22 +699,10 @@
     </path>
 
     <path name="camcorder-mic">
-        <ctl name="DEC1 MUX" value="ADC1" />
-        <ctl name="DEC2 MUX" value="ADC2" />
-        <ctl name="ADC2 MUX" value="INP3" />
-        <ctl name="ADC1 Volume" value="8" />
-        <ctl name="ADC2 Volume" value="8" />
-        <ctl name="MI2S_TX Channels" value="Two" />
-	</path>
+        <path name="handset-mic" />
+	<ctl name="ADC3 Volume" value="4" /> <!-- Ryan 160727 -->
 
-	<path name="camcorder-mic-inverse">
-        <ctl name="DEC1 MUX" value="ADC2" />
-        <ctl name="DEC2 MUX" value="ADC1" />
-        <ctl name="ADC2 MUX" value="INP3" />
-        <ctl name="ADC1 Volume" value="8" />
-        <ctl name="ADC2 Volume" value="8" />
-        <ctl name="MI2S_TX Channels" value="Two" />
-	</path>
+    </path>
 
     <path name="bt-sco-headset">
     </path>
@@ -734,11 +737,8 @@
         <path name="dmic-endfire" />
     </path>
 
-    <!-- Handset settings for Dual Mic -->
     <path name="voice-dmic-ef">
         <path name="dmic-endfire" />
-        <ctl name="ADC1 Volume" value="6" />
-        <ctl name="ADC3 Volume" value="6" />
     </path>
 
     <path name="voice-speaker-dmic-ef">
@@ -761,12 +761,6 @@
         <path name="speaker-dmic-endfire" />
     </path>
 
-    <path name="handset-dmic-for-voip">
-        <path name="voice-dmic-ef" />
-        <ctl name="ADC1 Volume" value="6" />
-        <ctl name="ADC3 Volume" value="6" />
-    </path>
-
     <path name="speaker-dmic-broadside">
         <path name="adc3" />
         <ctl name="DEC2 MUX" value="ADC1" />
@@ -787,39 +781,9 @@
 
     <!-- TTY devices -->
 
-    <path name="echo-reference-low-latency-record speaker">
-        <ctl name="AUDIO_REF_EC_UL5 MUX" value="I2S_RX" />
-    </path>
-
-    <path name="echo-reference-audio-record speaker">
-        <ctl name="AUDIO_REF_EC_UL1 MUX" value="I2S_RX" />
-    </path>
-
-    <path name="echo-reference-low-latency-record handset">
-        <ctl name="AUDIO_REF_EC_UL5 MUX" value="I2S_RX" />
-    </path>
-
-    <path name="echo-reference-audio-record handset">
-        <ctl name="AUDIO_REF_EC_UL1 MUX" value="I2S_RX" />
-    </path>
-
-    <path name="echo-reference-low-latency-record headphone">
-        <ctl name="AUDIO_REF_EC_UL5 MUX" value="I2S_RX" />
-    </path>
-
-    <path name="echo-reference-audio-record headphone">
-        <ctl name="AUDIO_REF_EC_UL1 MUX" value="I2S_RX" />
-    </path>
-
     <path name="tty-headphones">
-        <ctl name="MI2S_RX Channels" value="Two" />
         <ctl name="RX1 MIX1 INP1" value="RX1" />
-        <ctl name="RX2 MIX1 INP1" value="RX2" />
-        <ctl name="RDAC2 MUX" value="RX2" />
-        <ctl name="RX1 Digital Volume" value="84" />
-        <ctl name="EAR PA Gain" value="POS_6_DB" />
         <ctl name="HPHL" value="Switch" />
-        <ctl name="HPHR" value="Switch" />
     </path>
 
     <path name="voice-tty-full-headphones">
@@ -839,9 +803,7 @@
 
     <path name="voice-tty-full-headset-mic">
         <path name="adc2" />
-        <ctl name="ADC2 Volume" value="2" />
         <ctl name="ADC2 MUX" value="INP2" />
-        <ctl name="IIR1 INP1 MUX" value="DEC1" />
     </path>
 
     <path name="voice-tty-hco-headset-mic">
@@ -856,23 +818,4 @@
         <ctl name="MI2S_DL_HL Switch" value="1" />
     </path>
 
-    <path name="line">
-        <path name="headphones" />
-    </path>
-
-    <path name="voice-line">
-        <path name="voice-headphones" />
-    </path>
-
-    <path name="speaker-and-line">
-        <path name="speaker-and-headphones" />
-    </path>
-
-    <path name="unprocessed-handset-mic">
-        <path name="handset-mic" />
-    </path>
-
-    <path name="unprocessed-mic">
-        <path name="unprocessed-handset-mic" />
-    </path>
 </mixer>

@@ -74,19 +74,19 @@ void check_device()
     sysinfo(&sys);
 
     if (PRJ_HD == 1) {
-        family = "Z00L";
+        family = "Z00RD";
         if (PRJ_ID == 0) {
             if (PRJ_SKU == 3) {
-                device = "Z00W"; // ZE550KG
+                device = "Z00RD"; // ZE550KG
                 buildnumber = "2179";
                 builddate = "20170803";
             } else {
-                device = "Z00L"; // ZE550KL
+                device = "Z00ED"; // ZE500KL
                 buildnumber = "2179";
                 builddate = "20170803";
             }
         } else if (PRJ_ID == 1) {
-            device = "Z00M"; // ZE600KL
+            device = "Z00E"; // ZE500KL
             buildnumber = "2171";
             builddate = "20170719";
         }
@@ -99,21 +99,18 @@ void check_device()
     } else if (PRJ_HD == 0) {
         family = "Z00T";
         if (PRJ_ID == 0) {
-            device = "Z00T"; // ZE551KL
+            device = "Z00RD"; // ZE550KG
+            device = "Z00RD"; // ZE550KG
             buildnumber = "2056";
             builddate = "20170224";
         } else if (PRJ_ID == 1) {
-            device = "Z011"; // ZE601KL
+            device = "Z00ED"; // ZE500KL
             buildnumber = "2170";
             builddate = "20170719";
         } else if (PRJ_ID == 2) {
-            device = "Z00C"; // ZX550KL
+            device = "Z00E"; // ZE500KL
             buildnumber = "2056";
             builddate = "20170224";
-        } else if (PRJ_ID == 3) {
-            device = "Z00U"; // ZD551KL
-            buildnumber = "2214";
-            builddate = "20171110";
         }
 
         if (sys.totalram > 2048ull * 1024 * 1024) {

@@ -175,6 +175,9 @@ on post-fs-data
     rm /data/property/persist.radio.stack_id_0
     rm /data/property/persist.radio.stack_id_1
 
+    # Bluetooth
+    chown bluetooth bluetooth /persist/.bt_nv.bin
+
 on early-boot
     # Set RLIMIT_MEMLOCK to 64MB
     setrlimit 8 67108864 67108864
@@ -655,6 +658,8 @@ service rmt_storage /vendor/bin/rmt_storage
     class core
     user root
     group system wakelock
+    writepid /dev/cpuset/system-background/tasks
+    shutdown critical
 
 service hciattach /system/vendor/bin/init.qcom.bt.sh
     class late_start
@@ -705,10 +710,10 @@ service imsqmidaemon /vendor/bin/imsqmidaemon
     group radio log diag
 
 # FM
-on property:hw.fm.init=0
+on property:vendor.hw.fm.init=0
     write /sys/module/radio_iris_transport/parameters/fmsmd_set 0
 
-on property:hw.fm.init=1
+on property:vendor.hw.fm.init=1
     write /sys/module/radio_iris_transport/parameters/fmsmd_set 1
 
 # QMUX must be in multiple groups to support external process connections
@@ -716,14 +721,12 @@ service qmuxd /vendor/bin/qmuxd
     class main
     user root
     group radio audio bluetooth gps oem_2950 wakelock
+    writepid /dev/cpuset/system-background/tasks
 
 service netmgrd /vendor/bin/netmgrd
     class main
-    group wakelock
-
-on property:ro.use_data_netmgrd=false
-    # netmgr not supported on specific target
-    stop netmgrd
+    group system wakelock
+    writepid /dev/cpuset/system-background/tasks
 
 # Adjust socket buffer to enlarge TCP receive window for high bandwidth
 # but only if ro.data.large_tcp_window_size property is set.
@@ -765,6 +768,7 @@ service qcamerasvr /vendor/bin/mm-qcamera-daemon
     class late_start
     user camera
     group camera system inet input graphics
+    writepid /dev/cpuset/camera-daemon/tasks
 
 # Allow usb charging to be disabled peristently
 on property:persist.usb.chgdisabled=1
@@ -777,27 +781,26 @@ service qseecomd /vendor/bin/qseecomd
     class core
     user root
     group root
+   writepid /dev/cpuset/system-background/tasks
 
 service perfd /vendor/bin/perfd
-    class main
+    class late_start
     user root
     group root
-    disabled
+    socket perfd seqpacket 0666 root system
+    writepid /dev/cpuset/system-background/tasks
 
 service thermal-engine /vendor/bin/thermal-engine
     class main
     user root
     group root
+    writepid /dev/cpuset/system-background/tasks
 
 service time_daemon /vendor/bin/time_daemon
     class late_start
     user root
     group root
-
-service audiod /system/bin/audiod
-    class late_start
-    user system
-    group system
+    writepid /dev/cpuset/system-background/tasks
 
 on charger
     wait /dev/block/bootdevice/by-name/system
